@@ -1,0 +1,40 @@
+[project]
+name = "air-hockey-game"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "kasla-code", email = "kaslahalo@proton.me" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pygame-ce>=2.5.8",
+]
+
+[project.scripts]
+air-hockey-game = "air_hockey_game:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.39.10",
+    "poethepoet>=0.48.0",
+    "ruff>=0.16.3",
+]
+
+[tool.basedpyright]
+venvPath = "."
+venv = ".venv"
+exclude = [".venv"]
+typeCheckingMode = "all"
+
+[tool.poe.tasks]
+lint = "uv run ruff check src/"
+format = "uv run ruff format --check src/"
+code_check = "uv run basedpyright src/"
+
+[tool.poe.tasks.check]
+sequence = ["lint", "format", "code_check"]
